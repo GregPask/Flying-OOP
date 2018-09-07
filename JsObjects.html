@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>OOP JS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    #canvas {
+        background-color: rgb(0, 0, 0);
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+<script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var width = canvas.width = window.innerWidth;
+var height = canvas.height = window.innerHeight;
+
+
+function Ball(x,y,velX,velY,color,size){
+    this.x = x;
+    this.y = y;
+    this.velX = velX;
+    this.velY = velY;
+    this.color = color;
+    this.size = size;
+}
+
+Ball.prototype.draw = function(){
+ctx.beginPath();
+ctx.fillStyle  = this.color;
+ctx.arc(this.x,this.y,this.size,0,Math.PI * 2);
+ctx.fill();
+//console.log("this x: " + this.x);
+
+}; 
+
+Ball.prototype.update = function(){
+    if((this.x + this.size) >= width){
+        this.velX = -(this.velX);
+    }
+
+
+      if((this.x - this.size) <= 0){
+        this.velX = -(this.velX);
+    }
+
+      if((this.y + this.size) >= height){
+        this.velY = -(this.velY);
+    }
+
+      if((this.y - this.size) <= 0){
+        this.velY = -(this.velY);
+    }
+    
+    this.x += this.velX;
+    this.y += this.velY;
+};
+
+
+var balls = [];
+
+function random(min,max){
+    var ran = Math.floor(Math.random()*(max-min) + min)
+    return ran;
+}
+
+
+function loop(){
+   ctx.clearRect(0,0,width,height);
+
+   while(balls.length < 4000){
+
+    var Greg = new Ball(random(0,width
+    ),random(0,height)
+    ,random(-2,3)
+    ,random(-2,2),
+    'rgb('+random(0,155) +','+ random(0,155)+ "," + random(0,155) + ")",
+    0.9);
+
+
+     
+
+
+
+    balls.push(Greg);
+   
+   }
+
+    
+    for(var x = 0; x < balls.length; x++){
+    balls[x].draw();
+    balls[x].update();
+    
+    };
+
+   requestAnimationFrame(loop)
+
+
+} // End of Loop
+
+
+loop()
+
+
+
+</script>
+</body>
+</html>
